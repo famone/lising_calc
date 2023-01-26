@@ -17,8 +17,6 @@ export function getRange(){
     })
 }
 
-// export const name = 'Cocotin'
-
 
 
 
