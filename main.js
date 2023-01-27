@@ -75,6 +75,18 @@ async function calculate(){
 
     // API для 10 результатов от нескольких банков
 
+    suggestions.innerHTML = `
+                        <div class="loader">
+                            <img src="./loader.svg" alt="">
+                        </div>
+                        <div class="loader">
+                            <img src="./loader.svg" alt="">
+                        </div>
+                        <div class="loader">
+                            <img src="./loader.svg" alt="">
+                        </div>
+        `
+
     
     await fetch(`https://server.finleo.ru/api/public/autoassign/matched-partners?advance=${priceVal/100*avansVal}&advancePercent=${avansVal}&guaranteeId=32&inn=7722329291&isSecondHand=false&leasingTerm=${timeVal}&manufactureYear=2023&sum=${priceVal}`)
     .then(data => {
@@ -82,8 +94,8 @@ async function calculate(){
     })
     .then(response => {
         // console.log(response);
-        let suggestionsAmont = 0
         suggestions.innerHTML = ''
+        let suggestionsAmont = 0
         response.forEach((item) =>{
             if(item.meta.comissions === null){
                 return

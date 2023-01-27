@@ -23,6 +23,19 @@ label{
     font-size: 14px;
     color: #b4b4b4;
 }
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ececec;
+    margin-bottom: 24px;
+}
+.loader img{
+    height: 100px;
+}
 
 
 /* .suggestions  */
