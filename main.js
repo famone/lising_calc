@@ -9,12 +9,14 @@ const priceRange = document.querySelector('#priceRange')
 const avansRange = document.querySelector('#avansRange')
 const timeRange = document.querySelector('#timeRange')
 
-const monthPrice = document.querySelector('#monthPrice')
-const yearPercent = document.querySelector('#yearPercent')
+const suggestions = document.querySelector('.suggestions');
+
+// const monthPrice = document.querySelector('#monthPrice')
+// const yearPercent = document.querySelector('#yearPercent')
 
 
 getRange()
-
+  
 
 priceRange.addEventListener('input', function(e){
     priceInp.value = e.target.value
@@ -56,11 +58,72 @@ function calculate(){
     let timeVal = parseInt(timeInp.value)
 
 
-    let monthPayment = (avansVal/100 * priceVal + priceVal) / timeVal
+    // API для одного результата по подсчетам
 
-    monthPrice.innerHTML = parseInt(monthPayment).toLocaleString() + ' ₽'
+    // fetch(`https://www.stone-xxi.ru/api/calc_d.php?dbg=false&fmt=JSON&price=${priceVal}&adv=${avansVal}&sl=${timeVal}as=${priceVal/100*avansVal}`)
+    // .then(data => {
+    //     return data.json();
+    // })
+    // .then(response => {
+    //     console.log(response);
+    //     monthPrice.innerHTML = response['EP'].toLocaleString() + ' ₽'
+    //     yearPercent.innerHTML = response['Удорожание в год'] + '%'
 
-    let yearPercentVal = ((monthPayment * 36 - priceVal) / priceVal) * 100 / (timeVal/12)
+    // });
 
-    yearPercent.innerHTML = yearPercentVal.toFixed(2) + '%'
+
+    // API для 10 результатов от нескольких банков
+
+    
+    fetch(`https://server.finleo.ru/api/public/autoassign/matched-partners?advance=${priceVal/100*avansVal}&advancePercent=${avansVal}&guaranteeId=32&inn=7722329291&isSecondHand=false&leasingTerm=${timeVal}&manufactureYear=2023&sum=${priceVal}`)
+    .then(data => {
+        return data.json();
+    })
+    .then(response => {
+        console.log(response);
+        suggestions.innerHTML = ''
+        response.forEach((item) =>{
+            if(item.meta.comissions === null){
+                return
+            }
+
+            let suggItem = document.createElement('div')
+            suggItem.className = 'sugg-item'
+            suggItem.innerHTML = `
+                    <div class="row">
+                        <div class="col-lg-4 text-center">
+                            <img src="https://server.finleo.ru${item.small_logo}" alt="">
+                            <p class="me-0">${item.name}</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Платеж:</label>
+                            <p><strong>${parseInt(item.meta.comissions.monthlyPayment).toLocaleString()} ₽</strong></p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Удорожание:</label>
+                            <p><strong>${(item.meta.comissions.leaseRate * 100).toFixed(2)} %</strong></p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Общая сумма:</label>
+                            <p><strong>${parseInt(item.meta.comissions.dealSum).toLocaleString()} ₽</strong></p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Экономия:</label>
+                            <p><strong>${parseInt(item.meta.comissions.savingSum).toLocaleString()} ₽</strong></p>
+                        </div>
+                    </div>
+            `
+            suggestions.appendChild(suggItem)
+            // console.log(`${item.name} - Платеж: ${parseInt(item.meta.comissions.monthlyPayment)}, удорожание: ${(item.meta.comissions.leaseRate * 100).toFixed(2)}, сумма по договору: ${parseInt(item.meta.comissions.dealSum)}, экономия: ${parseInt(item.meta.comissions.savingSum)}`)
+
+        })
+    });
 }
+
+// let monthPayment = (avansVal/100 * priceVal + priceVal) / timeVal
+
+    // monthPrice.innerHTML = parseInt(monthPayment).toLocaleString() + ' ₽'
+
+    // let yearPercentVal = ((monthPayment * 36 - priceVal) / priceVal) * 100 / (timeVal/12)
+
+    // yearPercent.innerHTML = yearPercentVal.toFixed(2) + '%'

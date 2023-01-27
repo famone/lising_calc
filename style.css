@@ -25,6 +25,22 @@ label{
 }
 
 
+/* .suggestions  */
+.sugg-item{
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #ececec;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+.sugg-item img{
+    width: 20%;
+    margin-bottom: 12px;
+}
+.sugg-item label{
+    margin-top: 22px;
+}
+
 
 
 
