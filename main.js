@@ -85,6 +85,12 @@ async function calculate(){
                         <div class="loader">
                             <img src="./loader.svg" alt="">
                         </div>
+                        <div class="loader">
+                            <img src="./loader.svg" alt="">
+                        </div>
+                        <div class="loader">
+                            <img src="./loader.svg" alt="">
+                        </div>
         `
 
     
