@@ -1,150 +1,77 @@
-// const x = (0.2 * 3000000 + 3000000) / 36
 import { getRange } from '/rangeSlider.js'
 
-const priceInp = document.querySelector('#priceInp')
-const avansInp = document.querySelector('#avansInp')
-const timeInp = document.querySelector('#timeInp')
+// inputsIds
 
-const priceRange = document.querySelector('#priceRange')
-const avansRange = document.querySelector('#avansRange')
-const timeRange = document.querySelector('#timeRange')
+const weightDifference = document.querySelector('#weightDifference input[type="number"]')
+const distance = document.querySelector('#distance input[type="number"]')
+const dailyCargoes = document.querySelector('#dailyCargoes input[type="number"]')
+const yearDays = document.querySelector('#yearDays input[type="number"]')
+const salary = document.querySelector('#salary input[type="number"]')
+const fuelLitter = document.querySelector('#fuelLitter input[type="number"]')
+const fuelRate = document.querySelector('#fuelRate input[type="number"]')
+const cargoMass = document.querySelector('#cargoMass input[type="number"]')
+const carsAmount = document.querySelector('#carsAmount input[type="number"]')
+const years = document.querySelector('#years input[type="number"]')
 
-const suggestions = document.querySelector('.suggestions');
-const suggAmount = document.querySelector('#suggAmount')
+// resultsIds
+const yearRun = document.querySelector('#yearRun')
+const combinationMoney = document.querySelector('#combinationMoney')
+const yearFuel = document.querySelector('#yearFuel')
+const repair = document.querySelector('#repair')
+const cargoVolume = document.querySelector('#cargoVolume')
+const yearEconomy = document.querySelector('#yearEconomy')
+const additionVolume = document.querySelector('#additionVolume')
+const insurance = document.querySelector('#insurance')
+const fuelRateKg = document.querySelector('#fuelRateKg')
+const fuelEconomy = document.querySelector('#fuelEconomy')
+const kmRub = document.querySelector('#kmRub')
+const tonnPrice = document.querySelector('#tonnPrice')
+const additionTonn = document.querySelector('#additionTonn')
 
-// const monthPrice = document.querySelector('#monthPrice')
-// const yearPercent = document.querySelector('#yearPercent')
-
+// range-block-inp
+const rangeBlockInp = document.querySelectorAll('.range-block-inp input[type="number"]')
+const rangeBlockSlider = document.querySelectorAll('.range-block-inp input[type="range"]')
 
 getRange()
-  
-
-priceRange.addEventListener('change', function(e){
-    priceInp.value = e.target.value
-    getRange()
-    calculate()
-})
-avansRange.addEventListener('change', function(e){
-    avansInp.value = e.target.value
-    getRange()
-    calculate()
-})
-timeRange.addEventListener('change', function(e){
-    timeInp.value = e.target.value
-    getRange()
-    calculate()
-})
-priceInp.addEventListener('input', function(e){
-    priceRange.value = e.target.value
-    getRange()
-    calculate()
-})
-avansInp.addEventListener('input', function(e){
-    avansRange.value = e.target.value
-    getRange()
-    calculate()
-})
-timeInp.addEventListener('input', function(e){
-    timeRange.value = e.target.value
-    getRange()
-    calculate()
-})
-
-
 calculate()
 
-async function calculate(){
-    let priceVal = parseInt(priceInp.value)
-    let avansVal = parseInt(avansInp.value)
-    let timeVal = parseInt(timeInp.value)
+function calculate(){
+   
+    yearRun.innerHTML = parseFloat(distance.value) * parseFloat(dailyCargoes.value) * parseFloat(yearDays.value) * 2
+    yearFuel.innerHTML = (parseFloat(yearRun.innerText) / 100 * parseInt(fuelLitter.value) * parseInt(fuelRate.value)).toFixed(2)
+    repair.innerHTML = (parseFloat(yearRun.innerText)/25000*350000).toFixed(2)
+    insurance.innerHTML = 15000000 * 0.03
+    combinationMoney.innerHTML = ((parseInt(salary.value) * 13) + (parseInt(repair.innerText)) + parseInt(insurance.innerText) + parseFloat(yearFuel.innerText)).toFixed(2)
 
+    cargoVolume.innerHTML = parseFloat(cargoMass.value * dailyCargoes.value * yearDays.value).toFixed(2)
+    additionVolume.innerHTML = ((parseFloat(weightDifference.value) * parseFloat(dailyCargoes.value) * parseFloat(yearDays.value)) / 1000).toFixed(2)
+    fuelRateKg.innerHTML = parseFloat(44/fuelRate.value/1000).toFixed(3)
 
-    // API для одного результата по подсчетам
+    fuelEconomy.innerHTML = ((parseFloat(fuelRateKg.innerText) * parseFloat(weightDifference.value) * parseInt(yearRun.innerText) / 100 * parseInt(fuelLitter.value)) / 2).toFixed(2)
+    kmRub.innerHTML = (parseFloat(combinationMoney.innerText) / parseInt(yearRun.innerText)).toFixed(2)
 
-    // fetch(`https://www.stone-xxi.ru/api/calc_d.php?dbg=false&fmt=JSON&price=${priceVal}&adv=${avansVal}&sl=${timeVal}as=${priceVal/100*avansVal}`)
-    // .then(data => {
-    //     return data.json();
-    // })
-    // .then(response => {
-    //     console.log(response);
-    //     monthPrice.innerHTML = response['EP'].toLocaleString() + ' ₽'
-    //     yearPercent.innerHTML = response['Удорожание в год'] + '%'
+    tonnPrice.innerHTML = ( parseFloat(combinationMoney.innerText) / parseInt(cargoVolume.innerText)).toFixed(2)
+    yearEconomy.innerHTML = ((parseFloat(tonnPrice.innerText) * parseFloat(additionVolume.innerText) + parseFloat(fuelEconomy.innerText)) * parseInt(carsAmount.value)).toFixed(2)
 
-    // });
-
-
-    // API для 10 результатов от нескольких банков
-
-    suggestions.innerHTML = `
-                        <div class="loader">
-                            <img src="./loader.svg" alt="">
-                        </div>
-                        <div class="loader">
-                            <img src="./loader.svg" alt="">
-                        </div>
-                        <div class="loader">
-                            <img src="./loader.svg" alt="">
-                        </div>
-                        <div class="loader">
-                            <img src="./loader.svg" alt="">
-                        </div>
-                        <div class="loader">
-                            <img src="./loader.svg" alt="">
-                        </div>
-        `
-
+    additionEconomy.innerHTML = (parseFloat(yearEconomy.innerText) * parseInt(years.value)).toFixed(2)
+    additionTonn.innerHTML = (parseFloat(additionVolume.innerText) * parseInt(carsAmount.value) * parseInt(years.value)).toFixed(2)
     
-    await fetch(`https://server.finleo.ru/api/public/autoassign/matched-partners?advance=${priceVal/100*avansVal}&advancePercent=${avansVal}&guaranteeId=32&inn=7722329291&isSecondHand=false&leasingTerm=${timeVal}&manufactureYear=2023&sum=${priceVal}`)
-    .then(data => {
-        return data.json();
-    })
-    .then(response => {
-        // console.log(response);
-        suggestions.innerHTML = ''
-        let suggestionsAmont = 0
-        response.forEach((item) =>{
-            if(item.meta.comissions === null){
-                return
-            }
-            suggestionsAmont++
-            let suggItem = document.createElement('div')
-            suggItem.className = 'sugg-item'
-            suggItem.innerHTML = `
-                    <div class="row">
-                        <div class="col-lg-4 text-center">
-                            <img src="https://server.finleo.ru${item.small_logo}" alt="">
-                            <p class="me-0">${item.name}</p>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Платеж:</label>
-                            <p><strong>${parseInt(item.meta.comissions.monthlyPayment).toLocaleString()} ₽</strong></p>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Удорожание:</label>
-                            <p><strong>${(item.meta.comissions.leaseRate * 100).toFixed(2)} %</strong></p>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Общая сумма:</label>
-                            <p><strong>${parseInt(item.meta.comissions.dealSum).toLocaleString()} ₽</strong></p>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Экономия:</label>
-                            <p><strong>${parseInt(item.meta.comissions.savingSum).toLocaleString()} ₽</strong></p>
-                        </div>
-                    </div>
-            `
-            suggestions.appendChild(suggItem)
-            suggAmount.innerHTML = suggestionsAmont
-            // console.log(`${item.name} - Платеж: ${parseInt(item.meta.comissions.monthlyPayment)}, удорожание: ${(item.meta.comissions.leaseRate * 100).toFixed(2)}, сумма по договору: ${parseInt(item.meta.comissions.dealSum)}, экономия: ${parseInt(item.meta.comissions.savingSum)}`)
-
-        })
-    });
 }
 
-// let monthPayment = (avansVal/100 * priceVal + priceVal) / timeVal
+// экшен на действия текстовых полей
+rangeBlockInp.forEach((item, index) => {
+    item.addEventListener('input', function(){
+        calculate();
+        rangeBlockSlider[index].value = item.value
+        getRange()
+    })
+})
 
-    // monthPrice.innerHTML = parseInt(monthPayment).toLocaleString() + ' ₽'
-
-    // let yearPercentVal = ((monthPayment * 36 - priceVal) / priceVal) * 100 / (timeVal/12)
-
-    // yearPercent.innerHTML = yearPercentVal.toFixed(2) + '%'
+// экшен на действия ползунков
+rangeBlockSlider.forEach((item, index) => {
+    item.addEventListener('input', function(){
+        calculate();
+        rangeBlockInp[index].value = item.value
+        getRange()
+    })
+})

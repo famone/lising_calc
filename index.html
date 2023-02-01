@@ -16,39 +16,175 @@
     <section class="py-5">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1>Калькулятор лизинга</h1>
-                </div>
-                <div class="col-lg-4">
-                    <div class="range-block">
-                        <label>Стоимость имущества</label>
-                        <div class="range-block-inp">
-                            <input type="text" placeholder="Стоимость имущества" id="priceInp" value="3000000">
-                            <input type="range" min="500000" max="8000000" step="100000" value="3000000"
-                                id="priceRange">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Данные о технике и рейсе</h2>
                         </div>
-                    </div>
-
-                    <div class="range-block">
-                        <label>Первоначальный взнос %</label>
-                        <div class="range-block-inp">
-                            <input type="text" placeholder="мин 15%" id="avansInp" value="20">
-                            <input type="range" min="10" max="40" step="1" value="20" id="avansRange">
-                        </div>
-                    </div>
-
-                    <div class="range-block">
-                        <label>Срок договора</label>
-                        <div class="range-block-inp">
-                            <input type="text" placeholder="мин 12 месяцев" id="timeInp" value="36">
-                            <input type="range" min="12" max="48" step="1" value="36" id="timeRange">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <label>Предложения от банков: (<span id="suggAmount">0</span> шт.)</label>
-                    <div class="suggestions">
                         <!--  -->
+                        <div class="col-lg-6">
+                            <div class="range-block">
+                                <label>Разница в весе ТС, кг</label>
+                                <div class="range-block-inp" id="weightDifference">
+                                    <input type="number" value="1500">
+                                    <input type="range" min="100" max="5000" step="100" value="1500">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="range-block">
+                                <label>Масса груза за рейс, тн</label>
+                                <div class="range-block-inp" id="cargoMass">
+                                    <input type="number" value="33">
+                                    <input type="range" min="1" max="100" step="1" value="33">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Дистанция перевозки, км</label>
+                                <div class="range-block-inp" id="distance">
+                                    <input type="number" value="81">
+                                    <input type="range" min="1" max="1000" step="10" value="81">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Количество рейсов в день</label>
+                                <div class="range-block-inp" id="dailyCargoes">
+                                    <input type="number" value="4">
+                                    <input type="range" min="1" max="20" step="1" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Количество рабочих дней в год</label>
+                                <div class="range-block-inp" id="yearDays">
+                                    <input type="number" value="340">
+                                    <input type="range" min="200" max="365" step="1" value="340">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h2>Экономика</h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>з/п водителей
+                                    в месяц р.</label>
+                                <div class="range-block-inp" id="salary">
+                                    <input type="number" value="150000">
+                                    <input type="range" min="50000" max="500000" step="5000" value="150000">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Стоимость топлива
+                                    руб. за литр</label>
+                                <div class="range-block-inp" id="fuelLitter">
+                                    <input type="number" value="48">
+                                    <input type="range" min="1" max="200" step="1" value="48">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Средний расход
+                                    на 100 км пробега, л.</label>
+                                <div class="range-block-inp" id="fuelRate">
+                                    <input type="number" value="51">
+                                    <input type="range" min="10" max="100" step="1" value="51">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Количество единиц техники</label>
+                                <div class="range-block-inp" id="carsAmount">
+                                    <input type="number" value="3">
+                                    <input type="range" min="1" max="100" step="1" value="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="range-block">
+                                <label>Количество лет владения</label>
+                                <div class="range-block-inp" id="years">
+                                    <input type="number" value="1">
+                                    <input type="range" min="1" max="10" step="1" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <h2>Расчеты</h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Пробег комбинации в год, км</label>
+                            <h4 id="yearRun">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>затраты на топливо в год, р.</label>
+                            <h4 id="yearFuel">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>cтоимость ТО, ремонта, шин (переодичность ТО 25 т км, замена шин каждые 100 т км)</label>
+                            <h4 id="repair">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Объем перевезенного груза за год, тн</label>
+                            <h4 id="cargoVolume">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Объем дополнительно перевезенного груза за год, тн</label>
+                            <h4 id="additionVolume">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>cтраховка ТС КАСКО ОСАГО (ставка 3%, цена ТС 15 млн р)</label>
+                            <h4 id="insurance">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>расход топлива л. на 1 кг массы ТС  на 100 км (масса ТС 44 тонны)</label>
+                            <h4 id="fuelRateKg">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>экономия топлива в год на порожнем рейсе</label>
+                            <h4 id="fuelEconomy">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Затраты руб. на 1 км пробега </label>
+                            <h4 id="kmRub">0</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Стоимость перевезенной 1 тн груза р. </label>
+                            <h4 id="tonnPrice">0</h4>
+                        </div>
+                        <div class="col-lg-8"></div>
+
+                        <hr class="my-4">
+
+
+
+                        <div class="col-lg-6">
+                            <label>Ваши затраты на комбинацию в год, руб. (топливо, заработная плата, теническое обслуживание, ремонт, страховка)</label>
+                            <h4 id="combinationMoney">0</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Размер дополнительной экономии за счет снижения затрат на транспортировку груза и экономии топлива при порожнем рейсе, руб. за 1 год</label>
+                            <h4 id="yearEconomy">0</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Размер дополнительной экономии, руб. ВСЕГО</label>
+                            <h4 id="additionEconomy">0</h4>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>кроме этого, вы сможете перевезти дополнительно </label>
+                            <h4 id="additionTonn">0</h4>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
